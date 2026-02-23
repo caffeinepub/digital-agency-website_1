@@ -31,12 +31,37 @@ export default function AdminLoginPage() {
     e.preventDefault();
     setError('');
 
+    if (!identity) {
+      setError('Please authenticate with Internet Identity first');
+      return;
+    }
+
+    const userPrincipal = identity.getPrincipal();
+
+    console.log('[AdminLoginPage] Form submitted');
+    console.log('[AdminLoginPage] Username:', username);
+    console.log('[AdminLoginPage] Password length:', password.length);
+    console.log('[AdminLoginPage] User principal:', userPrincipal.toString());
+
     try {
-      await loginMutation.mutateAsync({ username, password });
+      console.log('[AdminLoginPage] Calling login mutation...');
+      await loginMutation.mutateAsync({ username, password, userPrincipal });
+      console.log('[AdminLoginPage] Login mutation successful, navigating to dashboard...');
       navigate({ to: '/admin/dashboard' });
     } catch (error: any) {
-      console.error('Login error:', error);
-      setError('Invalid credentials. Please try again.');
+      console.error('[AdminLoginPage] Login error:', error);
+      console.error('[AdminLoginPage] Error message:', error.message);
+      
+      // Extract meaningful error message
+      let errorMessage = 'Invalid credentials. Please try again.';
+      if (error.message && error.message.includes('Invalid credentials')) {
+        errorMessage = 'Invalid credentials. Please try again.';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      console.error('[AdminLoginPage] Displaying error:', errorMessage);
+      setError(errorMessage);
     }
   };
 

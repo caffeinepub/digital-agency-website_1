@@ -1,81 +1,57 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-23T20:35:20.296Z",
+  "generatedAt": "2026-02-23T21:04:41.550Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 4,
-    "implemented": 3,
+    "total": 3,
+    "implemented": 2,
     "items": [
       {
-        "id": "REQ-18",
-        "summary": "Migrate the backend from Express/Node.js to Motoko architecture, preserving all existing authentication logic, user profile management, role-based access control (admin/user), and inquiry submission endpoints",
+        "id": "REQ-22",
+        "summary": "Debug and fix the admin login authentication endpoint in backend/main.mo to correctly validate username 'admin' and password 'admin123', ensuring successful authentication after Internet Computer deployment",
         "status": "unknown",
         "plannedFiles": [],
         "matchedFiles": []
       },
       {
-        "id": "REQ-19",
-        "summary": "Ensure frontend React application remains fully compatible with the new Motoko backend, updating actor integration and API calls as needed while preserving all existing UI components and functionality",
+        "id": "REQ-23",
+        "summary": "Verify the frontend AdminLoginPage.tsx correctly sends login credentials to the backend authentication endpoint and properly handles the authentication response",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/hooks/useActor.ts",
-          "frontend/src/hooks/useQueries.ts",
-          "frontend/src/components/ContactSection.tsx",
           "frontend/src/pages/AdminLoginPage.tsx",
-          "frontend/src/pages/AdminDashboardPage.tsx",
-          "frontend/src/components/Layout.tsx"
+          "frontend/src/hooks/useQueries.ts"
         ],
         "matchedFiles": [
-          "frontend/src/hooks/useQueries.ts",
           "frontend/src/pages/AdminLoginPage.tsx",
-          "frontend/src/pages/AdminDashboardPage.tsx",
-          "frontend/src/components/Layout.tsx"
+          "frontend/src/hooks/useQueries.ts"
         ]
       },
       {
-        "id": "REQ-20",
-        "summary": "Preserve all existing CodeCrafter branding elements, coral and charcoal color scheme, typography, responsive layouts, and visual design system across the rebuilt application",
+        "id": "REQ-24",
+        "summary": "Add console logging to both frontend login submission and backend authentication handler to diagnose the credential validation failure",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/index.html",
-          "frontend/src/components/HeroSection.tsx",
-          "frontend/src/components/Layout.tsx",
-          "frontend/src/components/AboutSection.tsx",
-          "frontend/src/index.css",
-          "frontend/tailwind.config.js"
+          "frontend/src/pages/AdminLoginPage.tsx",
+          "frontend/src/hooks/useQueries.ts"
         ],
         "matchedFiles": [
-          "frontend/src/components/Layout.tsx"
-        ]
-      },
-      {
-        "id": "REQ-21",
-        "summary": "Configure the project for Internet Computer deployment with proper canister configuration, ensuring the application can be deployed and accessible via ic0.app domain",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/App.tsx",
-          "frontend/src/main.tsx",
-          "frontend/src/hooks/useInternetIdentity.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/App.tsx"
+          "frontend/src/pages/AdminLoginPage.tsx",
+          "frontend/src/hooks/useQueries.ts"
         ]
       }
     ]
   },
   "changedFiles": [
+    "backend/main.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/App.tsx",
-    "frontend/src/components/Layout.tsx",
     "frontend/src/hooks/useQueries.ts",
-    "frontend/src/pages/AdminDashboardPage.tsx",
     "frontend/src/pages/AdminLoginPage.tsx",
     "project_state.json",
     "scratch/component-selection.json",

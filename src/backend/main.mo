@@ -5,6 +5,7 @@ import Text "mo:core/Text";
 import Runtime "mo:core/Runtime";
 import MixinAuthorization "authorization/MixinAuthorization";
 import AccessControl "authorization/access-control";
+import Debug "mo:core/Debug";
 
 actor {
   // User profile type
@@ -36,14 +37,17 @@ actor {
   var nextInquiryId = 0;
   let inquiries = Map.empty<Nat, Inquiry>();
 
-  // Login endpoint - validates credentials and assigns admin role
+  // LOGIN ENDPOINT - Validates login credentials only
+  // NOTE: This function only validates credentials. It does NOT assign roles.
+  // Role assignment must be done separately by an existing admin using assignUserRole.
   public shared ({ caller }) func login(username : Text, password : Text) : async Text {
+    Debug.print("Attempting login with username: " # username # " and password: " # password);
     if (username != "admin" or password != "admin123") {
       Runtime.trap("Invalid credentials");
     };
 
-    AccessControl.assignRole(accessControlState, caller, caller, #admin);
-
+    // Only validate credentials - do NOT assign roles here
+    // Role assignment should be done by existing admins through assignUserRole
     "Authentication successful";
   };
 
@@ -88,6 +92,7 @@ actor {
   };
 
   // Admin-only: Assign role to a user
+  // This function properly delegates to AccessControl.assignRole which has built-in admin checks
   public shared ({ caller }) func assignUserRole(user : Principal, role : AccessControl.UserRole) : async () {
     AccessControl.assignRole(accessControlState, caller, user, role);
   };

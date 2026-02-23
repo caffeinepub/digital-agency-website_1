@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 9,
+  "projectStateVersion": 11,
   "summary": "Full-stack digital agency website using Node.js, Express, and Vite (React frontend) with admin login system",
   "architectural_notes": [
     "Full-stack architecture: Node.js/Express backend + Vite/React frontend",
@@ -10,8 +10,10 @@
     "Single command startup: npm run dev",
     "Client inquiry form integrated into public-facing website with backend submission handling"
   ],
-  "known_issues": [],
-  "isFixRequest": false,
+  "known_issues": [
+    "Admin login authentication failing with 'invalid credentials' error despite correct username (admin) and password (admin123) after Internet Computer deployment"
+  ],
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-create-admin-login-page-in-the-frontend-with-form-inputs-for-username-and-password-submitting-credentials-to-the-backend-authentication-endpoint-and-storing-the-returned-token",
@@ -148,6 +150,22 @@
         "REQ-21"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-verify-the-frontend-adminloginpage-tsx-correctly-sends-login-credentials-to-the-backend-authentication-endpoint-and-properly-handles-the-authentication-response",
+      "title": "Verify the frontend AdminLoginPage.tsx correctly sends login credentials to the backend authentication endpoint and properly handles the authentication response",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-console-logging-to-both-frontend-login-submission-and-backend-authentication-handler-to-diagnose-the-credential-validation-failure",
+      "title": "Add console logging to both frontend login submission and backend authentication handler to diagnose the credential validation failure",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -241,6 +259,14 @@
       "summary": "Migrate the backend from Express/Node.js to Motoko architecture, preserving all existing authentication logic, user profile management, role-based access control (admin/user), and inquiry submission endpoints",
       "reqIds": [
         "REQ-18"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Debug and fix the admin login authentication endpoint in backend/main.mo to correctly validate username 'admin' and password 'admin123', ensuring successful authentication after Internet Computer deployment",
+      "reqIds": [
+        "REQ-22"
       ],
       "status": "pending"
     }

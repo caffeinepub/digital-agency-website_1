@@ -1,124 +1,47 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Frontend Migration for CodeCrafter IC Platform",
+  "title": "Fix admin login authentication failing with invalid credentials error",
   "requirements": [
     {
-      "id": "REQ-19",
-      "summary": "Ensure frontend React application remains fully compatible with the new Motoko backend, updating actor integration and API calls while preserving all existing UI components and functionality",
+      "id": "REQ-23",
+      "summary": "Verify and fix frontend AdminLoginPage.tsx to correctly send login credentials and handle authentication response",
       "acceptanceCriteria": [
-        "useActor hook correctly interfaces with the Motoko backend actor",
-        "useQueries hooks work seamlessly with Motoko backend methods",
-        "Admin login, admin dashboard, and public homepage remain functional",
-        "Contact form submission successfully sends inquiries to Motoko backend",
-        "Internet Identity authentication integration works correctly",
-        "All existing UI components (HeroSection, ServicesSection, PortfolioSection, AboutSection, ContactSection, Layout) render without errors"
+        "Login form sends username and password in the correct format expected by backend",
+        "Authentication response is properly parsed and stored",
+        "Error handling displays backend error messages accurately",
+        "Successful authentication triggers navigation to /admin/dashboard"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/hooks/useActor.ts",
+          "path": "frontend/src/pages/AdminLoginPage.tsx",
           "operation": "modify",
-          "description": "Update the actor instantiation to work with the Motoko backend canister, ensuring the actor factory properly connects to backend/main.mo. Verify the authorization component's usage instructions before implementing to ensure proper initialization sequence."
+          "description": "Review and fix the login form submission to ensure credentials are sent correctly to the backend login method. Verify the form data structure matches the backend interface (username: string, password: string). Add console logging to track credential submission. Ensure proper error handling for authentication failures and successful authentication redirects to /admin/dashboard. Check that the useLogin hook from useQueries.ts is being used correctly and that any authentication token or session data returned from backend is properly stored."
         },
         {
           "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Update all query and mutation hooks to match the Motoko backend interface defined in backend.d.ts. Ensure submitInquiry accepts all nine parameters (fullName, emailAddress, phoneNumber, companyName, websiteType, features, budget, deadline, additionalNotes) matching the backend method signature. Update user profile queries (getCallerUserProfile, saveCallerUserProfile, getUserProfile) to work with the authorization component. Verify the authorization component's usage instructions for proper error handling and query invalidation patterns."
-        },
-        {
-          "path": "frontend/src/components/ContactSection.tsx",
-          "operation": "modify",
-          "description": "Verify that the contact form submission correctly calls the updated useSubmitInquiry mutation with all nine required fields. Ensure proper error handling and success feedback display."
-        },
+          "description": "Review and fix the useLogin hook to ensure it correctly calls actor.login(username, password) with the proper parameter types. Add console logging to track the backend response. Verify that successful login response is handled correctly and any authentication token is stored appropriately. Ensure error responses from the backend are properly propagated to the UI. Check that React Query cache invalidation occurs after successful login if needed."
+        }
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "summary": "Add console logging to frontend login submission to diagnose credential validation failure",
+      "acceptanceCriteria": [
+        "Frontend logs show credentials being sent to backend",
+        "Logs help identify whether issue is in credential transmission, comparison logic, or response handling"
+      ],
+      "file_operations": [
         {
           "path": "frontend/src/pages/AdminLoginPage.tsx",
           "operation": "modify",
-          "description": "Update authentication flow to use Internet Identity instead of username/password login. Verify the authorization component's usage instructions for proper login handling, role checking, and redirect logic. Ensure non-admin users see appropriate error messaging."
+          "description": "Add console.log statements to track: 1) form submission with sanitized credential info (log username but mask password), 2) right before calling the login mutation, 3) success response handling, and 4) error response handling. Include timestamps and clear labels for each log statement to facilitate debugging of the authentication flow."
         },
         {
-          "path": "frontend/src/pages/AdminDashboardPage.tsx",
+          "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Update dashboard to use authorization component's role-based access control. Verify the authorization component's usage instructions for proper admin verification, user profile management, and inquiry listing. Ensure getAllInquiries and getAllUserProfiles queries work with the Motoko backend interface."
-        },
-        {
-          "path": "frontend/src/components/Layout.tsx",
-          "operation": "modify",
-          "description": "Update authentication state handling to work with Internet Identity and the authorization component. Verify the authorization component's usage instructions for proper logout flow including clearing cached data. Ensure admin dashboard navigation only appears for authenticated admin users."
-        }
-      ]
-    },
-    {
-      "id": "REQ-20",
-      "summary": "Preserve all existing CodeCrafter branding elements, coral and charcoal color scheme, typography, responsive layouts, and visual design system",
-      "acceptanceCriteria": [
-        "Site title remains 'CodeCrafter' in index.html",
-        "Logo text displays 'CodeCrafter' in Layout header",
-        "Hero section references 'CodeCrafter' as the agency name",
-        "About section includes CodeCrafter company story",
-        "Footer copyright displays '© 2024 CodeCrafter. All rights reserved.'",
-        "Coral and charcoal color system using OKLCH is maintained",
-        "Tailwind CSS configuration and custom color variables remain intact",
-        "All animations, transitions, and hover effects are preserved"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/index.html",
-          "operation": "modify",
-          "description": "Verify that the page title remains 'CodeCrafter' and all meta tags are preserved during the migration."
-        },
-        {
-          "path": "frontend/src/components/HeroSection.tsx",
-          "operation": "modify",
-          "description": "Wire the generated hero background image at frontend/public/assets/generated/hero-bg.dim_1920x1080.png into the HeroSection component as the background image. Ensure 'CodeCrafter' branding text is preserved in the headline."
-        },
-        {
-          "path": "frontend/src/components/Layout.tsx",
-          "operation": "modify",
-          "description": "Verify that the Layout header displays 'CodeCrafter' logo text and footer copyright shows '© 2024 CodeCrafter. All rights reserved.' Ensure all navigation links and mobile menu functionality are preserved."
-        },
-        {
-          "path": "frontend/src/components/AboutSection.tsx",
-          "operation": "modify",
-          "description": "Verify that CodeCrafter company story and all statistics (150+ projects, 50+ clients, 15+ team members) are preserved. Ensure all four value cards render correctly."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Verify that all OKLCH-based coral and charcoal color custom properties are preserved in the CSS configuration. Ensure light/dark theme variables remain intact."
-        },
-        {
-          "path": "frontend/tailwind.config.js",
-          "operation": "modify",
-          "description": "Verify that custom coral/charcoal color extensions using OKLCH remain in the Tailwind configuration. Ensure container settings, animations, shadows, and typography plugin configurations are preserved."
-        }
-      ]
-    },
-    {
-      "id": "REQ-21",
-      "summary": "Configure the project for Internet Computer deployment ensuring the application can be deployed and accessible via ic0.app domain",
-      "acceptanceCriteria": [
-        "Project includes valid dfx.json configuration for Internet Computer deployment",
-        "Backend canister is properly configured with Motoko type",
-        "Frontend canister is configured to serve the React application",
-        "Application successfully deploys to Internet Computer",
-        "Deployed application is accessible via https://[canister-id].ic0.app URL",
-        "All routes (home, /login, /admin/dashboard) work in deployed environment"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Verify that all three routes (home, admin login at /login, admin dashboard at /admin/dashboard) are properly configured in the TanStack Router setup. Ensure the Layout wrapper with Outlet correctly renders nested routes for IC deployment environment."
-        },
-        {
-          "path": "frontend/src/main.tsx",
-          "operation": "modify",
-          "description": "Verify that QueryClient, InternetIdentityProvider, and root App component are properly configured for IC deployment. Ensure Internet Identity provider points to the correct IC environment URLs."
-        },
-        {
-          "path": "frontend/src/hooks/useInternetIdentity.ts",
-          "operation": "modify",
-          "description": "Verify the authorization component's usage instructions for proper Internet Identity configuration. Ensure the auth client is configured with correct derivationOrigin and identity provider URLs for IC deployment. Verify identity persistence and login state management work in the IC environment."
+          "description": "Add console.log statements in the useLogin hook to track: 1) parameters received by the mutation function, 2) actor availability check, 3) backend method call with parameter types, 4) raw response from backend before processing, and 5) any errors caught during the login process. This will help identify if the issue is in how credentials are passed to the backend or how responses are handled."
         }
       ]
     }

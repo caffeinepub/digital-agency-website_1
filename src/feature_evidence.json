@@ -2,12 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-ensure-frontend-react-application-remains-fully-compatible-with-the-new-motoko-backend-updating-actor-integration-and-api-calls-as-needed-while-preserving-all-existing-ui-components-and-functionality",
-      "featureTitle": "Ensure frontend React application remains fully compatible with the new Motoko backend, updating actor integration and API calls as needed while preserving all existing UI components and functionality",
+      "featureId": "feature-verify-the-frontend-adminloginpage-tsx-correctly-sends-login-credentials-to-the-backend-authentication-endpoint-and-properly-handles-the-authentication-response",
+      "featureTitle": "Verify the frontend AdminLoginPage.tsx correctly sends login credentials to the backend authentication endpoint and properly handles the authentication response",
       "files": [
-        "frontend/src/components/Layout.tsx",
         "frontend/src/hooks/useQueries.ts",
-        "frontend/src/pages/AdminDashboardPage.tsx",
         "frontend/src/pages/AdminLoginPage.tsx"
       ],
       "components": [
@@ -19,15 +17,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-19"
+        "REQ-23"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-preserve-all-existing-codecrafter-branding-elements-coral-and-charcoal-color-scheme-typography-responsive-layouts-and-visual-design-system-across-the-rebuilt-application",
-      "featureTitle": "Preserve all existing CodeCrafter branding elements, coral and charcoal color scheme, typography, responsive layouts, and visual design system across the rebuilt application",
+      "featureId": "feature-add-console-logging-to-both-frontend-login-submission-and-backend-authentication-handler-to-diagnose-the-credential-validation-failure",
+      "featureTitle": "Add console logging to both frontend login submission and backend authentication handler to diagnose the credential validation failure",
       "files": [
-        "frontend/src/components/Layout.tsx"
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/AdminLoginPage.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -38,26 +37,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-20"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-configure-the-project-for-internet-computer-deployment-with-proper-canister-configuration-ensuring-the-application-can-be-deployed-and-accessible-via-ic0-app-domain",
-      "featureTitle": "Configure the project for Internet Computer deployment with proper canister configuration, ensuring the application can be deployed and accessible via ic0.app domain",
-      "files": [
-        "frontend/src/App.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-21"
+        "REQ-24"
       ],
       "confidence": "high"
     }

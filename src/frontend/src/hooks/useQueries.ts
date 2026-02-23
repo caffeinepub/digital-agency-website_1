@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
 import type { UserProfile, Inquiry } from '../backend';
+import { UserRole } from '../backend';
 import { Principal } from '@dfinity/principal';
 
 export function useGetCallerUserProfile() {
@@ -97,13 +98,50 @@ export function useLogin() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ username, password }: { username: string; password: string }) => {
-      if (!actor) throw new Error('Actor not available');
-      return actor.login(username, password);
+    mutationFn: async ({ 
+      username, 
+      password, 
+      userPrincipal 
+    }: { 
+      username: string; 
+      password: string; 
+      userPrincipal: Principal;
+    }) => {
+      console.log('[useLogin] Starting login mutation with username:', username);
+      console.log('[useLogin] User principal:', userPrincipal.toString());
+      
+      if (!actor) {
+        console.error('[useLogin] Actor not available');
+        throw new Error('Actor not available');
+      }
+
+      console.log('[useLogin] Actor available, calling backend login...');
+      
+      try {
+        // Step 1: Validate credentials
+        const loginResponse = await actor.login(username, password);
+        console.log('[useLogin] Backend login response:', loginResponse);
+
+        // Step 2: Assign admin role to the caller
+        console.log('[useLogin] Assigning admin role to caller...');
+        await actor.assignCallerUserRole(userPrincipal, UserRole.admin);
+        console.log('[useLogin] Admin role assigned successfully');
+
+        return loginResponse;
+      } catch (error: any) {
+        console.error('[useLogin] Login failed:', error);
+        console.error('[useLogin] Error message:', error.message);
+        console.error('[useLogin] Error details:', error);
+        throw error;
+      }
     },
     onSuccess: () => {
+      console.log('[useLogin] Login successful, invalidating queries...');
       queryClient.invalidateQueries({ queryKey: ['isCallerAdmin'] });
       queryClient.invalidateQueries({ queryKey: ['callerRole'] });
+    },
+    onError: (error: any) => {
+      console.error('[useLogin] Mutation error:', error);
     },
   });
 }
