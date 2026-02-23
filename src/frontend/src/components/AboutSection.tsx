@@ -30,7 +30,7 @@ export default function AboutSection() {
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-16 space-y-4">
           <h2 className="text-4xl md:text-5xl font-bold text-charcoal dark:text-white">
-            About <span className="text-coral">Us</span>
+            About <span className="text-coral">CodeCrafter</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             We're a team of passionate designers, developers, and strategists dedicated to creating exceptional digital experiences
@@ -43,7 +43,7 @@ export default function AboutSection() {
               Crafting Digital Excellence Since 2020
             </h3>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              We're more than just a digital agency – we're your partners in growth. With a proven track record of delivering innovative solutions, we combine creativity with technical expertise to bring your vision to life.
+              CodeCrafter is more than just a digital agency – we're your partners in growth. With a proven track record of delivering innovative solutions, we combine creativity with technical expertise to bring your vision to life.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
               Our multidisciplinary team works collaboratively to ensure every project not only meets but exceeds expectations. From startups to established enterprises, we've helped businesses of all sizes achieve their digital goals.

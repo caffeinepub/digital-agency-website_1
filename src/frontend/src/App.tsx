@@ -20,7 +20,7 @@ const indexRoute = createRoute({
 
 const adminLoginRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/admin/login',
+  path: '/login',
   component: AdminLoginPage,
 });
 

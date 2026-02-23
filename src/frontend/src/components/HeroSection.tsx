@@ -30,7 +30,7 @@ export default function HeroSection() {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight">
-            Transform Your
+            CodeCrafter: Transform Your
             <span className="block text-coral mt-2">Digital Presence</span>
           </h1>
 

@@ -1,15 +1,16 @@
 {
-  "frontend/src/App.tsx": "Main application component with TanStack Router setup, defining routes for home, admin login, and admin dashboard pages wrapped in a shared layout.",
-  "frontend/src/hooks/useQueries.ts": "Custom React Query hooks for backend operations including user profile management, role checking, admin functions, and the new useSubmitInquiry mutation hook for submitting client inquiries with proper cache invalidation.",
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup, defining routes for home, admin login at /login, and admin dashboard at /admin/dashboard, all wrapped in a shared Layout component.",
+  "frontend/src/hooks/useQueries.ts": "Custom React Query hooks for all backend operations including user profile management, role checking, admin login with username/password, inquiry submission, inquiry management (get all, delete), and user profile management with proper cache invalidation.",
   "frontend/src/pages/HomePage.tsx": "Public homepage component that composes hero, services, portfolio, about, and contact sections into a complete landing page.",
-  "frontend/src/pages/AdminLoginPage.tsx": "Admin authentication page using Internet Identity with automatic redirect to dashboard for authenticated admins and error handling for non-admin users.",
-  "frontend/src/pages/AdminDashboardPage.tsx": "Protected admin dashboard displaying user statistics, profile management, and user list with delete functionality, including profile setup dialog for first-time users.",
-  "frontend/src/components/Layout.tsx": "Shared layout component with responsive navigation header, mobile menu, and footer with social links and attribution, wrapping all pages.",
-  "frontend/src/components/HeroSection.tsx": "Hero section with background image, gradient overlay, headline, description, and call-to-action buttons with smooth scroll navigation.",
+  "frontend/src/pages/AdminLoginPage.tsx": "Admin authentication page with username/password form (admin/admin123) that calls the backend login method to assign admin role, with automatic redirect to dashboard on success and error handling for invalid credentials.",
+  "frontend/src/pages/AdminDashboardPage.tsx": "Protected admin dashboard with tabs for managing inquiries and users, displaying statistics, inquiry details with all form fields, user profiles, and delete functionality for both inquiries and users, including profile setup dialog for first-time admins.",
+  "frontend/src/components/Layout.tsx": "Shared layout component with responsive navigation header displaying \"CodeCrafter\" branding, mobile menu, admin dashboard link for authenticated admins, and footer with copyright \"© 2024 CodeCrafter\" and caffeine.ai attribution with UTM tracking.",
+  "frontend/src/components/HeroSection.tsx": "Hero section with background image, gradient overlay, headline incorporating \"CodeCrafter\" brand name, description, and call-to-action buttons with smooth scroll navigation",
   "frontend/src/components/ServicesSection.tsx": "Services showcase section displaying six service cards with icons, titles, descriptions, and hover effects in a responsive grid.",
   "frontend/src/components/PortfolioSection.tsx": "Portfolio section featuring six project cards with gradient backgrounds, categories, tags, and hover interactions.",
-  "frontend/src/components/AboutSection.tsx": "About section with company story, statistics, and four value cards highlighting client focus, excellence, results, and passion.",
+  "frontend/src/components/AboutSection.tsx": "About section with company story referencing \"CodeCrafter\" as the agency name, statistics, and four value cards highlighting client focus, excellence, results, and passion",
   "frontend/src/components/ContactSection.tsx": "Contact section with comprehensive inquiry form featuring 9 fields (full name, email, phone, company, website type dropdown, features textarea, budget, deadline date picker, additional notes textarea), integrated with backend submission via React Query mutation, loading states, success/error feedback, and responsive grid layout with coral/charcoal design system.",
   "frontend/src/index.css": "Global styles with OKLCH color system defining coral and charcoal theme colors for light and dark modes, plus utility classes.",
-  "frontend/tailwind.config.js": "Tailwind configuration extending theme with coral/charcoal colors, Inter font family, custom shadows, and smooth transitions."
+  "frontend/tailwind.config.js": "Tailwind configuration extending theme with coral/charcoal colors, Inter font family, custom shadows, and smooth transitions.",
+  "frontend/index.html": "HTML entry point with updated page title to \"CodeCrafter\""
 }

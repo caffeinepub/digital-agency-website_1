@@ -2,10 +2,13 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-the-contactsection-component-to-include-the-following-form-fields-full-name-text-input-email-address-email-input-phone-number-tel-input-company-business-name-text-input-website-type-dropdown-with-options-personal-business-e-commerce-portfolio-features-requirements-textarea-budget-text-input-deadline-date-picker-input-and-additional-notes-textarea",
-      "featureTitle": "Update the ContactSection component to include the following form fields: Full Name (text input), Email Address (email input), Phone Number (tel input), Company / Business Name (text input), Website Type (dropdown with options: Personal, Business, E-Commerce, Portfolio), Features / Requirements (textarea), Budget (text input), Deadline (date picker input), and Additional Notes (textarea)",
+      "featureId": "feature-ensure-frontend-react-application-remains-fully-compatible-with-the-new-motoko-backend-updating-actor-integration-and-api-calls-as-needed-while-preserving-all-existing-ui-components-and-functionality",
+      "featureTitle": "Ensure frontend React application remains fully compatible with the new Motoko backend, updating actor integration and API calls as needed while preserving all existing UI components and functionality",
       "files": [
-        "frontend/src/components/ContactSection.tsx"
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/AdminDashboardPage.tsx",
+        "frontend/src/pages/AdminLoginPage.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -16,16 +19,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-7"
+        "REQ-19"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-connect-the-contactsection-form-submission-to-the-backend-inquiry-endpoint-using-react-query-mutation-handling-loading-states-success-feedback-and-error-handling",
-      "featureTitle": "Connect the ContactSection form submission to the backend inquiry endpoint using React Query mutation, handling loading states, success feedback, and error handling",
+      "featureId": "feature-preserve-all-existing-codecrafter-branding-elements-coral-and-charcoal-color-scheme-typography-responsive-layouts-and-visual-design-system-across-the-rebuilt-application",
+      "featureTitle": "Preserve all existing CodeCrafter branding elements, coral and charcoal color scheme, typography, responsive layouts, and visual design system across the rebuilt application",
       "files": [
-        "frontend/src/components/ContactSection.tsx",
-        "frontend/src/hooks/useQueries.ts"
+        "frontend/src/components/Layout.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -36,15 +38,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-9"
+        "REQ-20"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-remove-the-existing-message-field-from-contactsection-and-replace-it-with-the-new-comprehensive-form-fields-ensuring-no-unused-or-redundant-fields-remain",
-      "featureTitle": "Remove the existing 'Message' field from ContactSection and replace it with the new comprehensive form fields, ensuring no unused or redundant fields remain",
+      "featureId": "feature-configure-the-project-for-internet-computer-deployment-with-proper-canister-configuration-ensuring-the-application-can-be-deployed-and-accessible-via-ic0-app-domain",
+      "featureTitle": "Configure the project for Internet Computer deployment with proper canister configuration, ensuring the application can be deployed and accessible via ic0.app domain",
       "files": [
-        "frontend/src/components/ContactSection.tsx"
+        "frontend/src/App.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -55,45 +57,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-10"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-maintain-the-existing-coral-and-charcoal-visual-design-system-modern-typography-responsive-grid-layout-and-smooth-transitions-in-the-updated-contactsection-form",
-      "featureTitle": "Maintain the existing coral and charcoal visual design system, modern typography, responsive grid layout, and smooth transitions in the updated ContactSection form",
-      "files": [
-        "frontend/src/components/ContactSection.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-11"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-a-react-query-hook-in-usequeries-ts-for-submitting-client-inquiries-following-the-existing-pattern-of-other-query-hooks-in-the-file",
-      "featureTitle": "Create a React Query hook in useQueries.ts for submitting client inquiries, following the existing pattern of other query hooks in the file",
-      "files": [
-        "frontend/src/hooks/useQueries.ts"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-12"
+        "REQ-21"
       ],
       "confidence": "high"
     }

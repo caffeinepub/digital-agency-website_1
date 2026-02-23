@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 5,
+  "projectStateVersion": 9,
   "summary": "Full-stack digital agency website using Node.js, Express, and Vite (React frontend) with admin login system",
   "architectural_notes": [
     "Full-stack architecture: Node.js/Express backend + Vite/React frontend",
@@ -82,6 +82,70 @@
       "title": "Create a React Query hook in useQueries.ts for submitting client inquiries, following the existing pattern of other query hooks in the file",
       "reqIds": [
         "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-site-title-in-frontend-index-html-from-digital-agency-website-to-codecrafter",
+      "title": "Update the site title in frontend/index.html from 'Digital Agency Website' to 'CodeCrafter'",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-logo-text-in-the-layout-component-header-from-digital-agency-to-codecrafter",
+      "title": "Update the logo text in the Layout component header from 'Digital Agency' to 'CodeCrafter'",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-herosection-component-headline-to-reference-codecrafter-as-the-agency-name",
+      "title": "Update the HeroSection component headline to reference 'CodeCrafter' as the agency name",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-aboutsection-component-to-reference-codecrafter-in-the-company-story-text",
+      "title": "Update the AboutSection component to reference 'CodeCrafter' in the company story text",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-footer-copyright-text-in-the-layout-component-to-display-2024-codecrafter-all-rights-reserved",
+      "title": "Update the footer copyright text in the Layout component to display '© 2024 CodeCrafter. All rights reserved.'",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-frontend-react-application-remains-fully-compatible-with-the-new-motoko-backend-updating-actor-integration-and-api-calls-as-needed-while-preserving-all-existing-ui-components-and-functionality",
+      "title": "Ensure frontend React application remains fully compatible with the new Motoko backend, updating actor integration and API calls as needed while preserving all existing UI components and functionality",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-all-existing-codecrafter-branding-elements-coral-and-charcoal-color-scheme-typography-responsive-layouts-and-visual-design-system-across-the-rebuilt-application",
+      "title": "Preserve all existing CodeCrafter branding elements, coral and charcoal color scheme, typography, responsive layouts, and visual design system across the rebuilt application",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-configure-the-project-for-internet-computer-deployment-with-proper-canister-configuration-ensuring-the-application-can-be-deployed-and-accessible-via-ic0-app-domain",
+      "title": "Configure the project for Internet Computer deployment with proper canister configuration, ensuring the application can be deployed and accessible via ic0.app domain",
+      "reqIds": [
+        "REQ-21"
       ],
       "version": 1
     }
@@ -169,6 +233,14 @@
       "summary": "Create a backend endpoint in main.mo to handle client inquiry form submissions, accepting Full Name, Email Address, Phone Number, Company Name, Website Type, Features/Requirements, Budget, Deadline, and Additional Notes as parameters, and storing the inquiry data",
       "reqIds": [
         "REQ-8"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Migrate the backend from Express/Node.js to Motoko architecture, preserving all existing authentication logic, user profile management, role-based access control (admin/user), and inquiry submission endpoints",
+      "reqIds": [
+        "REQ-18"
       ],
       "status": "pending"
     }

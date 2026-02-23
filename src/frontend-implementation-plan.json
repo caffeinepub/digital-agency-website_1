@@ -1,96 +1,124 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Update client inquiry form with comprehensive fields",
+  "title": "Frontend Migration for CodeCrafter IC Platform",
   "requirements": [
     {
-      "id": "REQ-7",
-      "summary": "Update ContactSection component to include comprehensive form fields: Full Name, Email Address, Phone Number, Company/Business Name, Website Type dropdown, Features/Requirements textarea, Budget, Deadline date picker, and Additional Notes textarea",
+      "id": "REQ-19",
+      "summary": "Ensure frontend React application remains fully compatible with the new Motoko backend, updating actor integration and API calls while preserving all existing UI components and functionality",
       "acceptanceCriteria": [
-        "ContactSection form includes all 9 specified fields",
-        "Website Type dropdown contains exactly the four options: Personal, Business, E-Commerce, Portfolio",
-        "Features/Requirements and Additional Notes use textarea elements",
-        "Deadline uses a date input type",
-        "All fields are properly labeled and accessible"
+        "useActor hook correctly interfaces with the Motoko backend actor",
+        "useQueries hooks work seamlessly with Motoko backend methods",
+        "Admin login, admin dashboard, and public homepage remain functional",
+        "Contact form submission successfully sends inquiries to Motoko backend",
+        "Internet Identity authentication integration works correctly",
+        "All existing UI components (HeroSection, ServicesSection, PortfolioSection, AboutSection, ContactSection, Layout) render without errors"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/ContactSection.tsx",
+          "path": "frontend/src/hooks/useActor.ts",
           "operation": "modify",
-          "description": "Replace the existing form structure with comprehensive inquiry fields. Add state management for: fullName, emailAddress, phoneNumber, companyName, websiteType (dropdown with options: Personal, Business, E-Commerce, Portfolio), features (textarea), budget, deadline (date input), and additionalNotes (textarea). Maintain the existing coral/charcoal design system, input styling patterns, and responsive grid layout. Ensure all fields have proper labels and accessibility attributes."
-        }
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "summary": "Connect ContactSection form submission to backend inquiry endpoint using React Query mutation with loading states, success feedback, and error handling",
-      "acceptanceCriteria": [
-        "Form submission calls the backend inquiry endpoint with all field values",
-        "Loading state is displayed during submission",
-        "Success message appears after successful submission",
-        "Error handling displays appropriate feedback for failed submissions",
-        "Form resets after successful submission"
-      ],
-      "file_operations": [
+          "description": "Update the actor instantiation to work with the Motoko backend canister, ensuring the actor factory properly connects to backend/main.mo. Verify the authorization component's usage instructions before implementing to ensure proper initialization sequence."
+        },
         {
           "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Add a new React Query mutation hook useSubmitInquiry that calls actor.submitInquiry with all nine form parameters (fullName, emailAddress, phoneNumber, companyName, websiteType, features, budget, deadline, additionalNotes). Follow the existing pattern of mutation hooks in the file, using the actor instance from useActor and integrating with React Query's mutation system. Export the hook for use in ContactSection."
+          "description": "Update all query and mutation hooks to match the Motoko backend interface defined in backend.d.ts. Ensure submitInquiry accepts all nine parameters (fullName, emailAddress, phoneNumber, companyName, websiteType, features, budget, deadline, additionalNotes) matching the backend method signature. Update user profile queries (getCallerUserProfile, saveCallerUserProfile, getUserProfile) to work with the authorization component. Verify the authorization component's usage instructions for proper error handling and query invalidation patterns."
         },
         {
           "path": "frontend/src/components/ContactSection.tsx",
           "operation": "modify",
-          "description": "Integrate the useSubmitInquiry mutation hook from useQueries.ts into the form submission handler. Display loading state during mutation (e.g., disable submit button, show spinner). Show success feedback message upon successful submission and reset all form fields. Implement error handling to display user-friendly error messages for failed submissions. Maintain the existing visual design and transitions."
+          "description": "Verify that the contact form submission correctly calls the updated useSubmitInquiry mutation with all nine required fields. Ensure proper error handling and success feedback display."
+        },
+        {
+          "path": "frontend/src/pages/AdminLoginPage.tsx",
+          "operation": "modify",
+          "description": "Update authentication flow to use Internet Identity instead of username/password login. Verify the authorization component's usage instructions for proper login handling, role checking, and redirect logic. Ensure non-admin users see appropriate error messaging."
+        },
+        {
+          "path": "frontend/src/pages/AdminDashboardPage.tsx",
+          "operation": "modify",
+          "description": "Update dashboard to use authorization component's role-based access control. Verify the authorization component's usage instructions for proper admin verification, user profile management, and inquiry listing. Ensure getAllInquiries and getAllUserProfiles queries work with the Motoko backend interface."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Update authentication state handling to work with Internet Identity and the authorization component. Verify the authorization component's usage instructions for proper logout flow including clearing cached data. Ensure admin dashboard navigation only appears for authenticated admin users."
         }
       ]
     },
     {
-      "id": "REQ-10",
-      "summary": "Remove existing Message field from ContactSection and ensure only the 9 new comprehensive fields remain without redundancy",
+      "id": "REQ-20",
+      "summary": "Preserve all existing CodeCrafter branding elements, coral and charcoal color scheme, typography, responsive layouts, and visual design system",
       "acceptanceCriteria": [
-        "Old 'Message' field is removed from the form",
-        "Only the 9 specified fields are present in the form",
-        "No duplicate or unused form inputs exist in ContactSection"
+        "Site title remains 'CodeCrafter' in index.html",
+        "Logo text displays 'CodeCrafter' in Layout header",
+        "Hero section references 'CodeCrafter' as the agency name",
+        "About section includes CodeCrafter company story",
+        "Footer copyright displays '© 2024 CodeCrafter. All rights reserved.'",
+        "Coral and charcoal color system using OKLCH is maintained",
+        "Tailwind CSS configuration and custom color variables remain intact",
+        "All animations, transitions, and hover effects are preserved"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/ContactSection.tsx",
+          "path": "frontend/index.html",
           "operation": "modify",
-          "description": "Remove the existing message field and its associated state management. Verify that only the 9 specified fields (fullName, emailAddress, phoneNumber, companyName, websiteType, features, budget, deadline, additionalNotes) are present in the component. Clean up any unused state variables, handlers, or JSX elements related to the old form structure."
+          "description": "Verify that the page title remains 'CodeCrafter' and all meta tags are preserved during the migration."
+        },
+        {
+          "path": "frontend/src/components/HeroSection.tsx",
+          "operation": "modify",
+          "description": "Wire the generated hero background image at frontend/public/assets/generated/hero-bg.dim_1920x1080.png into the HeroSection component as the background image. Ensure 'CodeCrafter' branding text is preserved in the headline."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Verify that the Layout header displays 'CodeCrafter' logo text and footer copyright shows '© 2024 CodeCrafter. All rights reserved.' Ensure all navigation links and mobile menu functionality are preserved."
+        },
+        {
+          "path": "frontend/src/components/AboutSection.tsx",
+          "operation": "modify",
+          "description": "Verify that CodeCrafter company story and all statistics (150+ projects, 50+ clients, 15+ team members) are preserved. Ensure all four value cards render correctly."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Verify that all OKLCH-based coral and charcoal color custom properties are preserved in the CSS configuration. Ensure light/dark theme variables remain intact."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Verify that custom coral/charcoal color extensions using OKLCH remain in the Tailwind configuration. Ensure container settings, animations, shadows, and typography plugin configurations are preserved."
         }
       ]
     },
     {
-      "id": "REQ-11",
-      "summary": "Maintain existing coral and charcoal visual design system, modern typography, responsive grid layout, and smooth transitions in updated ContactSection form",
+      "id": "REQ-21",
+      "summary": "Configure the project for Internet Computer deployment ensuring the application can be deployed and accessible via ic0.app domain",
       "acceptanceCriteria": [
-        "Form styling uses existing coral accent colors and charcoal backgrounds",
-        "Form is fully responsive on mobile, tablet, and desktop viewports",
-        "Input fields use consistent styling with other site components",
-        "Hover and focus states include smooth transitions"
+        "Project includes valid dfx.json configuration for Internet Computer deployment",
+        "Backend canister is properly configured with Motoko type",
+        "Frontend canister is configured to serve the React application",
+        "Application successfully deploys to Internet Computer",
+        "Deployed application is accessible via https://[canister-id].ic0.app URL",
+        "All routes (home, /login, /admin/dashboard) work in deployed environment"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/ContactSection.tsx",
+          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Apply the existing design system tokens from frontend/src/index.css and frontend/tailwind.config.js to all new form fields. Use coral accent colors for focus states and CTAs, charcoal backgrounds where appropriate. Ensure responsive grid layout adapts properly across mobile, tablet, and desktop breakpoints. Apply consistent input styling matching other components, including smooth transitions on hover and focus states."
-        }
-      ]
-    },
-    {
-      "id": "REQ-12",
-      "summary": "Create React Query hook in useQueries.ts for submitting client inquiries following existing pattern",
-      "acceptanceCriteria": [
-        "New mutation hook follows the naming convention and structure of existing hooks",
-        "Hook uses the actor instance from useActor",
-        "Hook integrates with React Query's mutation system",
-        "Hook is exported and available for use in ContactSection"
-      ],
-      "file_operations": [
+          "description": "Verify that all three routes (home, admin login at /login, admin dashboard at /admin/dashboard) are properly configured in the TanStack Router setup. Ensure the Layout wrapper with Outlet correctly renders nested routes for IC deployment environment."
+        },
         {
-          "path": "frontend/src/hooks/useQueries.ts",
+          "path": "frontend/src/main.tsx",
           "operation": "modify",
-          "description": "Add useSubmitInquiry mutation hook following the existing pattern in the file. Use useActor to get the actor instance, then create a useMutation hook that calls actor.submitInquiry with the inquiry parameters. Export the hook with the same naming convention as other hooks in the file (e.g., useSubmitInquiry). Ensure proper TypeScript typing for the mutation parameters and return value."
+          "description": "Verify that QueryClient, InternetIdentityProvider, and root App component are properly configured for IC deployment. Ensure Internet Identity provider points to the correct IC environment URLs."
+        },
+        {
+          "path": "frontend/src/hooks/useInternetIdentity.ts",
+          "operation": "modify",
+          "description": "Verify the authorization component's usage instructions for proper Internet Identity configuration. Ensure the auth client is configured with correct derivationOrigin and identity provider URLs for IC deployment. Verify identity persistence and login state management work in the IC environment."
         }
       ]
     }

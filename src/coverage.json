@@ -1,94 +1,82 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-23T19:46:53.781Z",
+  "generatedAt": "2026-02-23T20:35:20.296Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 6,
-    "implemented": 5,
+    "total": 4,
+    "implemented": 3,
     "items": [
       {
-        "id": "REQ-10",
-        "summary": "Remove the existing 'Message' field from ContactSection and replace it with the new comprehensive form fields, ensuring no unused or redundant fields remain",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/ContactSection.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/ContactSection.tsx"
-        ]
-      },
-      {
-        "id": "REQ-11",
-        "summary": "Maintain the existing coral and charcoal visual design system, modern typography, responsive grid layout, and smooth transitions in the updated ContactSection form",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/ContactSection.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/ContactSection.tsx"
-        ]
-      },
-      {
-        "id": "REQ-12",
-        "summary": "Create a React Query hook in useQueries.ts for submitting client inquiries, following the existing pattern of other query hooks in the file",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/hooks/useQueries.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/hooks/useQueries.ts"
-        ]
-      },
-      {
-        "id": "REQ-7",
-        "summary": "Update the ContactSection component to include the following form fields: Full Name (text input), Email Address (email input), Phone Number (tel input), Company / Business Name (text input), Website Type (dropdown with options: Personal, Business, E-Commerce, Portfolio), Features / Requirements (textarea), Budget (text input), Deadline (date picker input), and Additional Notes (textarea)",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/ContactSection.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/ContactSection.tsx"
-        ]
-      },
-      {
-        "id": "REQ-8",
-        "summary": "Create a backend endpoint in main.mo to handle client inquiry form submissions, accepting Full Name, Email Address, Phone Number, Company Name, Website Type, Features/Requirements, Budget, Deadline, and Additional Notes as parameters, and storing the inquiry data",
+        "id": "REQ-18",
+        "summary": "Migrate the backend from Express/Node.js to Motoko architecture, preserving all existing authentication logic, user profile management, role-based access control (admin/user), and inquiry submission endpoints",
         "status": "unknown",
         "plannedFiles": [],
         "matchedFiles": []
       },
       {
-        "id": "REQ-9",
-        "summary": "Connect the ContactSection form submission to the backend inquiry endpoint using React Query mutation, handling loading states, success feedback, and error handling",
+        "id": "REQ-19",
+        "summary": "Ensure frontend React application remains fully compatible with the new Motoko backend, updating actor integration and API calls as needed while preserving all existing UI components and functionality",
         "status": "implemented",
         "plannedFiles": [
+          "frontend/src/hooks/useActor.ts",
           "frontend/src/hooks/useQueries.ts",
-          "frontend/src/components/ContactSection.tsx"
+          "frontend/src/components/ContactSection.tsx",
+          "frontend/src/pages/AdminLoginPage.tsx",
+          "frontend/src/pages/AdminDashboardPage.tsx",
+          "frontend/src/components/Layout.tsx"
         ],
         "matchedFiles": [
           "frontend/src/hooks/useQueries.ts",
-          "frontend/src/components/ContactSection.tsx"
+          "frontend/src/pages/AdminLoginPage.tsx",
+          "frontend/src/pages/AdminDashboardPage.tsx",
+          "frontend/src/components/Layout.tsx"
+        ]
+      },
+      {
+        "id": "REQ-20",
+        "summary": "Preserve all existing CodeCrafter branding elements, coral and charcoal color scheme, typography, responsive layouts, and visual design system across the rebuilt application",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/index.html",
+          "frontend/src/components/HeroSection.tsx",
+          "frontend/src/components/Layout.tsx",
+          "frontend/src/components/AboutSection.tsx",
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/Layout.tsx"
+        ]
+      },
+      {
+        "id": "REQ-21",
+        "summary": "Configure the project for Internet Computer deployment with proper canister configuration, ensuring the application can be deployed and accessible via ic0.app domain",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/main.tsx",
+          "frontend/src/hooks/useInternetIdentity.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
-    "backend/main.mo",
     "build-request.json",
-    "build-template/README.md",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/backend.d.ts",
-    "frontend/src/backend.ts",
-    "frontend/src/components/ContactSection.tsx",
-    "frontend/src/declarations/backend.did.d.ts",
-    "frontend/src/declarations/backend.did.js",
+    "frontend/src/App.tsx",
+    "frontend/src/components/Layout.tsx",
     "frontend/src/hooks/useQueries.ts",
+    "frontend/src/pages/AdminDashboardPage.tsx",
+    "frontend/src/pages/AdminLoginPage.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

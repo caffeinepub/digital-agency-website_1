@@ -1,13 +1,14 @@
 # Specification
 
 ## Summary
-**Goal:** Update the client inquiry form with comprehensive fields to capture detailed project information.
+**Goal:** Rebuild the CodeCrafter website to run on the Internet Computer platform by migrating the backend from Express/Node.js to Motoko while preserving all existing functionality, branding, and UI components.
 
 **Planned changes:**
-- Replace the existing ContactSection form with 9 comprehensive fields: Full Name, Email Address, Phone Number, Company/Business Name, Website Type (dropdown), Features/Requirements (textarea), Budget, Deadline (date picker), and Additional Notes (textarea)
-- Remove the old 'Message' field from the contact form
-- Create a backend endpoint to handle and store client inquiry submissions with all form fields
-- Connect the frontend form to the backend using React Query mutation with loading, success, and error states
-- Maintain the existing coral and charcoal design system with responsive layout and smooth transitions
+- Migrate backend to Motoko single-actor architecture (backend/main.mo) with all existing authentication, user profile management, role-based access control, and inquiry submission endpoints
+- Update frontend React application to interface with Motoko backend through useActor and useQueries hooks
+- Configure project for Internet Computer deployment with dfx.json for both backend and frontend canisters
+- Ensure Internet Identity authentication integration works correctly
+- Preserve all CodeCrafter branding, coral and charcoal color scheme, typography, responsive layouts, and visual design system
+- Maintain all existing UI components (HeroSection, ServicesSection, PortfolioSection, AboutSection, ContactSection, Layout)
 
-**User-visible outcome:** Users can submit detailed client inquiries through a comprehensive form that captures project requirements, budget, timeline, and business information, with visual feedback during submission.
+**User-visible outcome:** Users can access the CodeCrafter website deployed on Internet Computer via ic0.app domain with all original functionality intact - browse services, view portfolio, submit inquiries through the contact form, and admins can log in to manage user profiles and view submissions. The site maintains its complete visual identity and responsive design.

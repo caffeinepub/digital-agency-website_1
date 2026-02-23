@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
-import type { UserProfile } from '../backend';
+import type { UserProfile, Inquiry } from '../backend';
 import { Principal } from '@dfinity/principal';
 
 export function useGetCallerUserProfile() {
@@ -92,6 +92,22 @@ export function useDeleteUserProfile() {
   });
 }
 
+export function useLogin() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ username, password }: { username: string; password: string }) => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.login(username, password);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['isCallerAdmin'] });
+      queryClient.invalidateQueries({ queryKey: ['callerRole'] });
+    },
+  });
+}
+
 export function useSubmitInquiry() {
   const { actor } = useActor();
 
@@ -119,6 +135,34 @@ export function useSubmitInquiry() {
         inquiry.deadline,
         inquiry.additionalNotes
       );
+    },
+  });
+}
+
+export function useGetAllInquiries() {
+  const { actor, isFetching: actorFetching } = useActor();
+
+  return useQuery<Array<[bigint, Inquiry]>>({
+    queryKey: ['allInquiries'],
+    queryFn: async () => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.getAllInquiries();
+    },
+    enabled: !!actor && !actorFetching,
+  });
+}
+
+export function useDeleteInquiry() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: bigint) => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.deleteInquiry(id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['allInquiries'] });
     },
   });
 }
