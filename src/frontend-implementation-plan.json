@@ -1,0 +1,98 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Update client inquiry form with comprehensive fields",
+  "requirements": [
+    {
+      "id": "REQ-7",
+      "summary": "Update ContactSection component to include comprehensive form fields: Full Name, Email Address, Phone Number, Company/Business Name, Website Type dropdown, Features/Requirements textarea, Budget, Deadline date picker, and Additional Notes textarea",
+      "acceptanceCriteria": [
+        "ContactSection form includes all 9 specified fields",
+        "Website Type dropdown contains exactly the four options: Personal, Business, E-Commerce, Portfolio",
+        "Features/Requirements and Additional Notes use textarea elements",
+        "Deadline uses a date input type",
+        "All fields are properly labeled and accessible"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ContactSection.tsx",
+          "operation": "modify",
+          "description": "Replace the existing form structure with comprehensive inquiry fields. Add state management for: fullName, emailAddress, phoneNumber, companyName, websiteType (dropdown with options: Personal, Business, E-Commerce, Portfolio), features (textarea), budget, deadline (date input), and additionalNotes (textarea). Maintain the existing coral/charcoal design system, input styling patterns, and responsive grid layout. Ensure all fields have proper labels and accessibility attributes."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Connect ContactSection form submission to backend inquiry endpoint using React Query mutation with loading states, success feedback, and error handling",
+      "acceptanceCriteria": [
+        "Form submission calls the backend inquiry endpoint with all field values",
+        "Loading state is displayed during submission",
+        "Success message appears after successful submission",
+        "Error handling displays appropriate feedback for failed submissions",
+        "Form resets after successful submission"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add a new React Query mutation hook useSubmitInquiry that calls actor.submitInquiry with all nine form parameters (fullName, emailAddress, phoneNumber, companyName, websiteType, features, budget, deadline, additionalNotes). Follow the existing pattern of mutation hooks in the file, using the actor instance from useActor and integrating with React Query's mutation system. Export the hook for use in ContactSection."
+        },
+        {
+          "path": "frontend/src/components/ContactSection.tsx",
+          "operation": "modify",
+          "description": "Integrate the useSubmitInquiry mutation hook from useQueries.ts into the form submission handler. Display loading state during mutation (e.g., disable submit button, show spinner). Show success feedback message upon successful submission and reset all form fields. Implement error handling to display user-friendly error messages for failed submissions. Maintain the existing visual design and transitions."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Remove existing Message field from ContactSection and ensure only the 9 new comprehensive fields remain without redundancy",
+      "acceptanceCriteria": [
+        "Old 'Message' field is removed from the form",
+        "Only the 9 specified fields are present in the form",
+        "No duplicate or unused form inputs exist in ContactSection"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ContactSection.tsx",
+          "operation": "modify",
+          "description": "Remove the existing message field and its associated state management. Verify that only the 9 specified fields (fullName, emailAddress, phoneNumber, companyName, websiteType, features, budget, deadline, additionalNotes) are present in the component. Clean up any unused state variables, handlers, or JSX elements related to the old form structure."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Maintain existing coral and charcoal visual design system, modern typography, responsive grid layout, and smooth transitions in updated ContactSection form",
+      "acceptanceCriteria": [
+        "Form styling uses existing coral accent colors and charcoal backgrounds",
+        "Form is fully responsive on mobile, tablet, and desktop viewports",
+        "Input fields use consistent styling with other site components",
+        "Hover and focus states include smooth transitions"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ContactSection.tsx",
+          "operation": "modify",
+          "description": "Apply the existing design system tokens from frontend/src/index.css and frontend/tailwind.config.js to all new form fields. Use coral accent colors for focus states and CTAs, charcoal backgrounds where appropriate. Ensure responsive grid layout adapts properly across mobile, tablet, and desktop breakpoints. Apply consistent input styling matching other components, including smooth transitions on hover and focus states."
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Create React Query hook in useQueries.ts for submitting client inquiries following existing pattern",
+      "acceptanceCriteria": [
+        "New mutation hook follows the naming convention and structure of existing hooks",
+        "Hook uses the actor instance from useActor",
+        "Hook integrates with React Query's mutation system",
+        "Hook is exported and available for use in ContactSection"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add useSubmitInquiry mutation hook following the existing pattern in the file. Use useActor to get the actor instance, then create a useMutation hook that calls actor.submitInquiry with the inquiry parameters. Export the hook with the same naming convention as other hooks in the file (e.g., useSubmitInquiry). Ensure proper TypeScript typing for the mutation parameters and return value."
+        }
+      ]
+    }
+  ]
+}

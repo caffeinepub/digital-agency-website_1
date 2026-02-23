@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.75rem;
+        
+        /* Coral and Charcoal Color System */
+        --coral: 0.65 0.18 15;
+        --coral-dark: 0.55 0.20 15;
+        --charcoal: 0.25 0.02 255;
+        --charcoal-darker: 0.18 0.02 255;
+        
+        /* Light mode */
+        --background: 0.98 0 0;
+        --foreground: 0.20 0.02 255;
+        --card: 1 0 0;
+        --card-foreground: 0.20 0.02 255;
+        --popover: 1 0 0;
+        --popover-foreground: 0.20 0.02 255;
+        --primary: 0.65 0.18 15;
+        --primary-foreground: 1 0 0;
+        --secondary: 0.95 0.01 255;
+        --secondary-foreground: 0.25 0.02 255;
+        --muted: 0.96 0.01 255;
+        --muted-foreground: 0.50 0.02 255;
+        --accent: 0.95 0.01 255;
+        --accent-foreground: 0.25 0.02 255;
+        --destructive: 0.577 0.245 27.325;
+        --destructive-foreground: 1 0 0;
+        --border: 0.90 0.01 255;
+        --input: 0.90 0.01 255;
+        --ring: 0.65 0.18 15;
+        --chart-1: 0.65 0.18 15;
+        --chart-2: 0.55 0.15 200;
+        --chart-3: 0.60 0.12 280;
+        --chart-4: 0.70 0.16 120;
+        --chart-5: 0.50 0.20 340;
+    }
+
+    .dark {
+        --background: 0.15 0.02 255;
+        --foreground: 0.98 0 0;
+        --card: 0.20 0.02 255;
+        --card-foreground: 0.98 0 0;
+        --popover: 0.18 0.02 255;
+        --popover-foreground: 0.98 0 0;
+        --primary: 0.65 0.18 15;
+        --primary-foreground: 1 0 0;
+        --secondary: 0.25 0.02 255;
+        --secondary-foreground: 0.98 0 0;
+        --muted: 0.25 0.02 255;
+        --muted-foreground: 0.65 0.02 255;
+        --accent: 0.30 0.02 255;
+        --accent-foreground: 0.98 0 0;
+        --destructive: 0.60 0.20 27;
+        --destructive-foreground: 0.98 0 0;
+        --border: 0.30 0.02 255;
+        --input: 0.30 0.02 255;
+        --ring: 0.65 0.18 15;
+        --chart-1: 0.65 0.18 15;
+        --chart-2: 0.55 0.15 200;
+        --chart-3: 0.60 0.12 280;
+        --chart-4: 0.70 0.16 120;
+        --chart-5: 0.50 0.20 340;
+    }
+
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-bold;
+        letter-spacing: -0.02em;
+    }
+}
+
+@layer utilities {
+    .text-coral {
+        color: oklch(var(--coral));
+    }
+    
+    .bg-coral {
+        background-color: oklch(var(--coral));
+    }
+    
+    .bg-coral-dark {
+        background-color: oklch(var(--coral-dark));
+    }
+    
+    .text-charcoal {
+        color: oklch(var(--charcoal));
+    }
+    
+    .bg-charcoal {
+        background-color: oklch(var(--charcoal));
+    }
+    
+    .bg-charcoal-darker {
+        background-color: oklch(var(--charcoal-darker));
+    }
+    
+    .border-coral {
+        border-color: oklch(var(--coral));
+    }
+    
+    .hover\:bg-coral-dark:hover {
+        background-color: oklch(var(--coral-dark));
+    }
+    
+    .hover\:text-coral:hover {
+        color: oklch(var(--coral));
+    }
+    
+    .hover\:border-coral:hover {
+        border-color: oklch(var(--coral));
+    }
+}

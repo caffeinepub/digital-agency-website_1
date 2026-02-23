@@ -1,0 +1,179 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 5,
+  "summary": "Full-stack digital agency website using Node.js, Express, and Vite (React frontend) with admin login system",
+  "architectural_notes": [
+    "Full-stack architecture: Node.js/Express backend + Vite/React frontend",
+    "Backend runs on port 5000",
+    "Client and server separated into distinct folders",
+    "Frontend auto-served by Express (no separate dev server)",
+    "Single command startup: npm run dev",
+    "Client inquiry form integrated into public-facing website with backend submission handling"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-create-admin-login-page-in-the-frontend-with-form-inputs-for-username-and-password-submitting-credentials-to-the-backend-authentication-endpoint-and-storing-the-returned-token",
+      "title": "Create admin login page in the frontend with form inputs for username and password, submitting credentials to the backend authentication endpoint and storing the returned token",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-admin-dashboard-page-in-the-frontend-accessible-only-after-successful-authentication-displaying-admin-controls-and-agency-management-interface",
+      "title": "Create admin dashboard page in the frontend accessible only after successful authentication, displaying admin controls and agency management interface",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-public-facing-digital-agency-homepage-with-sections-showcasing-services-portfolio-about-information-and-contact-details-using-a-clean-modern-design-aesthetic",
+      "title": "Create public-facing digital agency homepage with sections showcasing services, portfolio, about information, and contact details using a clean modern design aesthetic",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-cohesive-visual-design-system-across-all-pages-using-warm-coral-and-deep-charcoal-as-primary-colors-modern-sans-serif-typography-generous-whitespace-and-smooth-transitions-for-interactive-elements",
+      "title": "Implement a cohesive visual design system across all pages using warm coral and deep charcoal as primary colors, modern sans-serif typography, generous whitespace, and smooth transitions for interactive elements",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-contactsection-component-to-include-the-following-form-fields-full-name-text-input-email-address-email-input-phone-number-tel-input-company-business-name-text-input-website-type-dropdown-with-options-personal-business-e-commerce-portfolio-features-requirements-textarea-budget-text-input-deadline-date-picker-input-and-additional-notes-textarea",
+      "title": "Update the ContactSection component to include the following form fields: Full Name (text input), Email Address (email input), Phone Number (tel input), Company / Business Name (text input), Website Type (dropdown with options: Personal, Business, E-Commerce, Portfolio), Features / Requirements (textarea), Budget (text input), Deadline (date picker input), and Additional Notes (textarea)",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-connect-the-contactsection-form-submission-to-the-backend-inquiry-endpoint-using-react-query-mutation-handling-loading-states-success-feedback-and-error-handling",
+      "title": "Connect the ContactSection form submission to the backend inquiry endpoint using React Query mutation, handling loading states, success feedback, and error handling",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-existing-message-field-from-contactsection-and-replace-it-with-the-new-comprehensive-form-fields-ensuring-no-unused-or-redundant-fields-remain",
+      "title": "Remove the existing 'Message' field from ContactSection and replace it with the new comprehensive form fields, ensuring no unused or redundant fields remain",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-maintain-the-existing-coral-and-charcoal-visual-design-system-modern-typography-responsive-grid-layout-and-smooth-transitions-in-the-updated-contactsection-form",
+      "title": "Maintain the existing coral and charcoal visual design system, modern typography, responsive grid layout, and smooth transitions in the updated ContactSection form",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-react-query-hook-in-usequeries-ts-for-submitting-client-inquiries-following-the-existing-pattern-of-other-query-hooks-in-the-file",
+      "title": "Create a React Query hook in useQueries.ts for submitting client inquiries, following the existing pattern of other query hooks in the file",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Backend server setup with Express on port 5000",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Frontend setup with Vite and React",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Admin login system (username: admin, password: admin123)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Admin dashboard after login",
+      "reqIds": [
+        "AR-3"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Express routing with frontend auto-serving (no 404 errors)",
+      "reqIds": [
+        "AR-1",
+        "AR-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Clean modern UI design",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Proper folder structure (client and server folders)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Implement admin authentication system in the backend with a login endpoint that validates username 'admin' and password 'admin123', returns authentication token or session identifier on success",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Create authentication middleware in the backend to protect dashboard and admin-only routes, verifying tokens or sessions from authenticated requests",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Add comprehensive client inquiry form with Full Name, Email, Phone, Company Name, Website Type dropdown, Features/Requirements textarea, Budget, Deadline date picker, and Additional Notes fields",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Connect client form frontend to backend Express route for form submission handling",
+      "reqIds": [
+        "AR-10"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Create a backend endpoint in main.mo to handle client inquiry form submissions, accepting Full Name, Email Address, Phone Number, Company Name, Website Type, Features/Requirements, Budget, Deadline, and Additional Notes as parameters, and storing the inquiry data",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Digital Agency Website",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

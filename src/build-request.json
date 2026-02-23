@@ -1,0 +1,142 @@
+{
+  "kind": "build_request",
+  "title": "Update client inquiry form with comprehensive fields",
+  "projectName": "Digital Agency Website",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-7",
+      "text": "Update the ContactSection component to include the following form fields: Full Name (text input), Email Address (email input), Phone Number (tel input), Company / Business Name (text input), Website Type (dropdown with options: Personal, Business, E-Commerce, Portfolio), Features / Requirements (textarea), Budget (text input), Deadline (date picker input), and Additional Notes (textarea)",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Add/Update form fields for clients: Full Name, Email Address, Phone Number, Company / Business Name, Website Type (dropdown: Personal, Business, E-Commerce, Portfolio), Features / Requirements (textarea), Budget, Deadline (date picker), Additional Notes (textarea)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "ContactSection form includes all 9 specified fields",
+        "Website Type dropdown contains exactly the four options: Personal, Business, E-Commerce, Portfolio",
+        "Features/Requirements and Additional Notes use textarea elements",
+        "Deadline uses a date input type",
+        "All fields are properly labeled and accessible"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Create a backend endpoint in main.mo to handle client inquiry form submissions, accepting Full Name, Email Address, Phone Number, Company Name, Website Type, Features/Requirements, Budget, Deadline, and Additional Notes as parameters, and storing the inquiry data",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Ensure frontend React form fields are properly connected to backend Express route"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend function accepts all 9 form field parameters",
+        "Function stores client inquiry data persistently",
+        "Function returns success confirmation upon valid submission",
+        "Function handles validation for required fields"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Connect the ContactSection form submission to the backend inquiry endpoint using React Query mutation, handling loading states, success feedback, and error handling",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Ensure frontend React form fields are properly connected to backend Express route"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Form submission calls the backend inquiry endpoint with all field values",
+        "Loading state is displayed during submission",
+        "Success message appears after successful submission",
+        "Error handling displays appropriate feedback for failed submissions",
+        "Form resets after successful submission"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Remove the existing 'Message' field from ContactSection and replace it with the new comprehensive form fields, ensuring no unused or redundant fields remain",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Remove any unused or redundant fields"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Old 'Message' field is removed from the form",
+        "Only the 9 specified fields are present in the form",
+        "No duplicate or unused form inputs exist in ContactSection"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Maintain the existing coral and charcoal visual design system, modern typography, responsive grid layout, and smooth transitions in the updated ContactSection form",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Maintain clean, modern UI and responsive design"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Form styling uses existing coral accent colors and charcoal backgrounds",
+        "Form is fully responsive on mobile, tablet, and desktop viewports",
+        "Input fields use consistent styling with other site components",
+        "Hover and focus states include smooth transitions"
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Create a React Query hook in useQueries.ts for submitting client inquiries, following the existing pattern of other query hooks in the file",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Ensure frontend React form fields are properly connected to backend Express route"
+        ]
+      },
+      "acceptanceCriteria": [
+        "New mutation hook follows the naming convention and structure of existing hooks",
+        "Hook uses the actor instance from useActor",
+        "Hook integrates with React Query's mutation system",
+        "Hook is exported and available for use in ContactSection"
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not modify the admin login functionality or authentication system",
+    "Do not change the admin dashboard page or its user management features",
+    "Keep the Layout component, navigation, and overall site structure unchanged",
+    "Maintain the existing four-feature design system (coral/charcoal colors, typography, spacing, transitions)",
+    "Do not alter HeroSection, ServicesSection, PortfolioSection, or AboutSection components",
+    "Follow the existing single-actor backend architecture in main.mo"
+  ],
+  "nonGoals": [
+    "Adding email notification functionality for form submissions",
+    "Creating an admin interface to view submitted inquiries",
+    "Implementing form field validation beyond basic required field checks",
+    "Adding file upload capability to the form",
+    "Creating automated responses or confirmation emails"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

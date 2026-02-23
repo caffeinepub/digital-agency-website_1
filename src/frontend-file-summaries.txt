@@ -1,0 +1,15 @@
+{
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup, defining routes for home, admin login, and admin dashboard pages wrapped in a shared layout.",
+  "frontend/src/hooks/useQueries.ts": "Custom React Query hooks for backend operations including user profile management, role checking, admin functions, and the new useSubmitInquiry mutation hook for submitting client inquiries with proper cache invalidation.",
+  "frontend/src/pages/HomePage.tsx": "Public homepage component that composes hero, services, portfolio, about, and contact sections into a complete landing page.",
+  "frontend/src/pages/AdminLoginPage.tsx": "Admin authentication page using Internet Identity with automatic redirect to dashboard for authenticated admins and error handling for non-admin users.",
+  "frontend/src/pages/AdminDashboardPage.tsx": "Protected admin dashboard displaying user statistics, profile management, and user list with delete functionality, including profile setup dialog for first-time users.",
+  "frontend/src/components/Layout.tsx": "Shared layout component with responsive navigation header, mobile menu, and footer with social links and attribution, wrapping all pages.",
+  "frontend/src/components/HeroSection.tsx": "Hero section with background image, gradient overlay, headline, description, and call-to-action buttons with smooth scroll navigation.",
+  "frontend/src/components/ServicesSection.tsx": "Services showcase section displaying six service cards with icons, titles, descriptions, and hover effects in a responsive grid.",
+  "frontend/src/components/PortfolioSection.tsx": "Portfolio section featuring six project cards with gradient backgrounds, categories, tags, and hover interactions.",
+  "frontend/src/components/AboutSection.tsx": "About section with company story, statistics, and four value cards highlighting client focus, excellence, results, and passion.",
+  "frontend/src/components/ContactSection.tsx": "Contact section with comprehensive inquiry form featuring 9 fields (full name, email, phone, company, website type dropdown, features textarea, budget, deadline date picker, additional notes textarea), integrated with backend submission via React Query mutation, loading states, success/error feedback, and responsive grid layout with coral/charcoal design system.",
+  "frontend/src/index.css": "Global styles with OKLCH color system defining coral and charcoal theme colors for light and dark modes, plus utility classes.",
+  "frontend/tailwind.config.js": "Tailwind configuration extending theme with coral/charcoal colors, Inter font family, custom shadows, and smooth transitions."
+}
