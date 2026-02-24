@@ -1,8 +1,7 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
-import type { UserProfile, Inquiry } from '../backend';
-import { UserRole } from '../backend';
 import { Principal } from '@dfinity/principal';
+import type { UserProfile, Inquiry } from '../backend';
 
 export function useGetCallerUserProfile() {
   const { actor, isFetching: actorFetching } = useActor();
@@ -39,118 +38,11 @@ export function useSaveCallerUserProfile() {
   });
 }
 
-export function useGetCallerRole() {
-  const { actor, isFetching: actorFetching } = useActor();
-
-  return useQuery({
-    queryKey: ['callerRole'],
-    queryFn: async () => {
-      if (!actor) throw new Error('Actor not available');
-      return actor.getCallerRole();
-    },
-    enabled: !!actor && !actorFetching,
-  });
-}
-
-export function useIsCallerAdmin() {
-  const { actor, isFetching: actorFetching } = useActor();
-
-  return useQuery({
-    queryKey: ['isCallerAdmin'],
-    queryFn: async () => {
-      if (!actor) throw new Error('Actor not available');
-      return actor.isCallerAdmin();
-    },
-    enabled: !!actor && !actorFetching,
-  });
-}
-
-export function useGetAllUserProfiles() {
-  const { actor, isFetching: actorFetching } = useActor();
-
-  return useQuery<Array<[Principal, UserProfile]>>({
-    queryKey: ['allUserProfiles'],
-    queryFn: async () => {
-      if (!actor) throw new Error('Actor not available');
-      return actor.getAllUserProfiles();
-    },
-    enabled: !!actor && !actorFetching,
-  });
-}
-
-export function useDeleteUserProfile() {
-  const { actor } = useActor();
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: async (user: Principal) => {
-      if (!actor) throw new Error('Actor not available');
-      return actor.deleteUserProfile(user);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['allUserProfiles'] });
-    },
-  });
-}
-
-export function useLogin() {
-  const { actor } = useActor();
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: async ({ 
-      username, 
-      password, 
-      userPrincipal 
-    }: { 
-      username: string; 
-      password: string; 
-      userPrincipal: Principal;
-    }) => {
-      console.log('[useLogin] Starting login mutation with username:', username);
-      console.log('[useLogin] User principal:', userPrincipal.toString());
-      
-      if (!actor) {
-        console.error('[useLogin] Actor not available');
-        throw new Error('Actor not available');
-      }
-
-      console.log('[useLogin] Actor available, calling backend login...');
-      
-      try {
-        // Step 1: Validate credentials
-        const loginResponse = await actor.login(username, password);
-        console.log('[useLogin] Backend login response:', loginResponse);
-
-        // Step 2: Assign admin role to the caller
-        console.log('[useLogin] Assigning admin role to caller...');
-        await actor.assignCallerUserRole(userPrincipal, UserRole.admin);
-        console.log('[useLogin] Admin role assigned successfully');
-
-        return loginResponse;
-      } catch (error: any) {
-        console.error('[useLogin] Login failed:', error);
-        console.error('[useLogin] Error message:', error.message);
-        console.error('[useLogin] Error details:', error);
-        throw error;
-      }
-    },
-    onSuccess: () => {
-      console.log('[useLogin] Login successful, invalidating queries...');
-      queryClient.invalidateQueries({ queryKey: ['isCallerAdmin'] });
-      queryClient.invalidateQueries({ queryKey: ['callerRole'] });
-    },
-    onError: (error: any) => {
-      console.error('[useLogin] Mutation error:', error);
-    },
-  });
-}
-
 export function useSubmitInquiry() {
   const { actor } = useActor();
 
   return useMutation({
-    mutationFn: async (inquiry: {
+    mutationFn: async (data: {
       fullName: string;
       emailAddress: string;
       phoneNumber: string;
@@ -163,17 +55,31 @@ export function useSubmitInquiry() {
     }) => {
       if (!actor) throw new Error('Actor not available');
       return actor.submitInquiry(
-        inquiry.fullName,
-        inquiry.emailAddress,
-        inquiry.phoneNumber,
-        inquiry.companyName,
-        inquiry.websiteType,
-        inquiry.features,
-        inquiry.budget,
-        inquiry.deadline,
-        inquiry.additionalNotes
+        data.fullName,
+        data.emailAddress,
+        data.phoneNumber,
+        data.companyName,
+        data.websiteType,
+        data.features,
+        data.budget,
+        data.deadline,
+        data.additionalNotes
       );
     },
+  });
+}
+
+export function useIsCallerAdmin() {
+  const { actor, isFetching: actorFetching } = useActor();
+
+  return useQuery<boolean>({
+    queryKey: ['isCallerAdmin'],
+    queryFn: async () => {
+      if (!actor) return false;
+      return actor.isCallerAdmin();
+    },
+    enabled: !!actor && !actorFetching,
+    retry: false,
   });
 }
 
@@ -201,6 +107,34 @@ export function useDeleteInquiry() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['allInquiries'] });
+    },
+  });
+}
+
+export function useGetAllUserProfiles() {
+  const { actor, isFetching: actorFetching } = useActor();
+
+  return useQuery<Array<[Principal, UserProfile]>>({
+    queryKey: ['allUserProfiles'],
+    queryFn: async () => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.getAllUserProfiles();
+    },
+    enabled: !!actor && !actorFetching,
+  });
+}
+
+export function useDeleteUserProfile() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (principal: string) => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.deleteUserProfile(Principal.fromText(principal));
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['allUserProfiles'] });
     },
   });
 }

@@ -121,8 +121,8 @@ export interface backendInterface {
     getCallerUserRole(): Promise<UserRole>;
     getInquiry(id: bigint): Promise<Inquiry | null>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
+    initializeActorAsAdmin(userProvidedToken: string): Promise<void>;
     isCallerAdmin(): Promise<boolean>;
-    login(username: string, password: string): Promise<string>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
     submitInquiry(fullName: string, emailAddress: string, phoneNumber: string, companyName: string, websiteType: string, features: string, budget: string, deadline: string, additionalNotes: string): Promise<bigint>;
 }
@@ -297,6 +297,20 @@ export class Backend implements backendInterface {
             return from_candid_opt_n5(this._uploadFile, this._downloadFile, result);
         }
     }
+    async initializeActorAsAdmin(arg0: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.initializeActorAsAdmin(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.initializeActorAsAdmin(arg0);
+            return result;
+        }
+    }
     async isCallerAdmin(): Promise<boolean> {
         if (this.processError) {
             try {
@@ -308,20 +322,6 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.isCallerAdmin();
-            return result;
-        }
-    }
-    async login(arg0: string, arg1: string): Promise<string> {
-        if (this.processError) {
-            try {
-                const result = await this.actor.login(arg0, arg1);
-                return result;
-            } catch (e) {
-                this.processError(e);
-                throw new Error("unreachable");
-            }
-        } else {
-            const result = await this.actor.login(arg0, arg1);
             return result;
         }
     }

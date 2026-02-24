@@ -1,74 +1,118 @@
 {
   "kind": "build_request",
-  "title": "Fix admin login authentication failing with invalid credentials error",
-  "projectName": "CodeCrafter",
-  "priority": "high",
+  "title": "Add secure admin panel with hidden access route",
+  "projectName": "CodeCrafter Admin",
+  "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-22",
-      "text": "Debug and fix the admin login authentication endpoint in backend/main.mo to correctly validate username 'admin' and password 'admin123', ensuring successful authentication after Internet Computer deployment",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-last"
-        ],
-        "quotes": [
-          "Again showing invalid credentials"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Admin login accepts username 'admin' with password 'admin123' without showing 'Invalid credentials' error",
-        "Successful login redirects to admin dashboard",
-        "Authentication token or session is properly generated and returned to frontend",
-        "Login works consistently on the deployed Internet Computer canister"
-      ]
-    },
-    {
-      "id": "REQ-23",
-      "text": "Verify the frontend AdminLoginPage.tsx correctly sends login credentials to the backend authentication endpoint and properly handles the authentication response",
+      "id": "REQ-1",
+      "text": "Create a hidden admin route at /admin that is not visible in the main navigation menu and is only accessible by direct URL entry",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-last"
+          "msg-latest"
         ],
         "quotes": [
-          "Again showing invalid credentials"
+          "Create a direct admin route or button that is hidden from regular users"
         ]
       },
       "acceptanceCriteria": [
-        "Login form sends username and password in the correct format expected by backend",
-        "Authentication response is properly parsed and stored",
-        "Error handling displays backend error messages accurately",
-        "Successful authentication triggers navigation to /admin/dashboard"
+        "Admin route exists at /admin path",
+        "Route is not displayed in the main website navigation menu",
+        "Route can be accessed by typing the URL directly",
+        "Regular website visitors cannot discover the admin panel through navigation"
       ]
     },
     {
-      "id": "REQ-24",
-      "text": "Add console logging to both frontend login submission and backend authentication handler to diagnose the credential validation failure",
+      "id": "REQ-2",
+      "text": "Implement admin authentication using Internet Identity integration that restricts access to the admin panel based on valid admin credentials",
       "target": "both",
       "source": {
         "messageIds": [
-          "msg-last"
+          "msg-latest"
+        ],
+        "quotes": [
+          "Only users with valid admin credentials should be able to access it",
+          "allows admins to log in securely"
         ]
       },
       "acceptanceCriteria": [
-        "Frontend logs show credentials being sent to backend",
-        "Backend logs show credentials received and validation result",
-        "Logs help identify whether issue is in credential transmission, comparison logic, or response handling"
+        "Admin login page prompts for Internet Identity authentication",
+        "Only principals with admin role can access admin panel features",
+        "Unauthorized users are redirected or shown access denied message",
+        "Authentication state persists across page refreshes"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Create an admin dashboard page that displays after successful authentication, showing admin-specific functionality and controls",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "add a secure admin panel to the website"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Dashboard is only accessible after successful admin authentication",
+        "Dashboard provides clear admin interface with relevant controls",
+        "Dashboard maintains consistent styling with the main website theme",
+        "Unauthenticated access attempts are blocked"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Implement backend authorization checks that verify admin role before allowing access to admin-only operations using the existing role-based access control system",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "Only users with valid admin credentials should be able to access it"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend verifies caller principal has admin role before executing sensitive operations",
+        "Non-admin principals receive authorization errors when attempting admin operations",
+        "Admin authorization integrates with existing access control implementation",
+        "Admin token validation works correctly"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Ensure the admin panel implementation is compatible with and deployable to the current production environment (Version 16)",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "Ensure it works with the current production deployment (Version 16)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin panel deploys successfully to production",
+        "No conflicts with existing Version 16 functionality",
+        "All admin features work in production environment",
+        "Main website functionality remains unchanged for regular visitors"
       ]
     }
   ],
   "constraints": [
-    "Maintain single-actor architecture in backend/main.mo",
-    "Do not modify frontend/src/hooks/useInternetIdentity.ts or other immutable frontend paths",
-    "Preserve all existing CodeCrafter branding and UI design",
-    "Ensure fix works with Internet Computer deployment constraints"
+    "Admin panel must not be visible to regular website visitors",
+    "Must integrate with existing Internet Identity authentication system",
+    "Must use existing backend role-based access control implementation",
+    "Must not disrupt current production deployment (Version 16)",
+    "Must maintain security best practices for credential handling"
   ],
   "nonGoals": [
-    "Changing admin credentials from admin/admin123",
-    "Implementing new authentication methods beyond username/password",
-    "Redesigning the login page UI",
-    "Adding password recovery or multi-factor authentication"
+    "Creating a separate admin website or subdomain",
+    "Modifying the main website's public-facing navigation or content",
+    "Implementing custom authentication beyond Internet Identity",
+    "Adding admin functionality to the existing AboutSection, ContactSection, HeroSection, PortfolioSection, or ServicesSection components"
   ],
   "imageRequirements": {
     "required": [],

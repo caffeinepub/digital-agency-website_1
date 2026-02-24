@@ -1,47 +1,113 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix admin login authentication failing with invalid credentials error",
+  "title": "Add secure admin panel with hidden access route",
   "requirements": [
     {
-      "id": "REQ-23",
-      "summary": "Verify and fix frontend AdminLoginPage.tsx to correctly send login credentials and handle authentication response",
+      "id": "REQ-1",
+      "summary": "Create a hidden admin route at /admin that is not visible in the main navigation menu and is only accessible by direct URL entry",
       "acceptanceCriteria": [
-        "Login form sends username and password in the correct format expected by backend",
-        "Authentication response is properly parsed and stored",
-        "Error handling displays backend error messages accurately",
-        "Successful authentication triggers navigation to /admin/dashboard"
+        "Admin route exists at /admin path",
+        "Route is not displayed in the main website navigation menu",
+        "Route can be accessed by typing the URL directly",
+        "Regular website visitors cannot discover the admin panel through navigation"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/AdminLoginPage.tsx",
+          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Review and fix the login form submission to ensure credentials are sent correctly to the backend login method. Verify the form data structure matches the backend interface (username: string, password: string). Add console logging to track credential submission. Ensure proper error handling for authentication failures and successful authentication redirects to /admin/dashboard. Check that the useLogin hook from useQueries.ts is being used correctly and that any authentication token or session data returned from backend is properly stored."
+          "description": "Add /admin route to TanStack Router configuration without adding it to the main navigation. The route should be accessible by direct URL but remain hidden from regular navigation menus."
         },
         {
-          "path": "frontend/src/hooks/useQueries.ts",
+          "path": "frontend/src/pages/AdminLoginPage.tsx",
           "operation": "modify",
-          "description": "Review and fix the useLogin hook to ensure it correctly calls actor.login(username, password) with the proper parameter types. Add console logging to track the backend response. Verify that successful login response is handled correctly and any authentication token is stored appropriately. Ensure error responses from the backend are properly propagated to the UI. Check that React Query cache invalidation occurs after successful login if needed."
+          "description": "Implement admin login page component that handles Internet Identity authentication flow. Use the authorization component to support admin authentication. Verify the component's usage instructions before implementing."
         }
       ]
     },
     {
-      "id": "REQ-24",
-      "summary": "Add console logging to frontend login submission to diagnose credential validation failure",
+      "id": "REQ-2",
+      "summary": "Implement admin authentication using Internet Identity integration that restricts access to the admin panel based on valid admin credentials",
       "acceptanceCriteria": [
-        "Frontend logs show credentials being sent to backend",
-        "Logs help identify whether issue is in credential transmission, comparison logic, or response handling"
+        "Admin login page prompts for Internet Identity authentication",
+        "Only principals with admin role can access admin panel features",
+        "Unauthorized users are redirected or shown access denied message",
+        "Authentication state persists across page refreshes"
       ],
       "file_operations": [
         {
           "path": "frontend/src/pages/AdminLoginPage.tsx",
           "operation": "modify",
-          "description": "Add console.log statements to track: 1) form submission with sanitized credential info (log username but mask password), 2) right before calling the login mutation, 3) success response handling, and 4) error response handling. Include timestamps and clear labels for each log statement to facilitate debugging of the authentication flow."
+          "description": "Add Internet Identity login integration using useInternetIdentity hook. Check if the authenticated user has admin role using the backend's isCallerAdmin method. Handle authentication state and redirect authenticated admins to the dashboard. Use the authorization component to verify admin role. Verify the component's usage instructions before implementing."
         },
         {
           "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Add console.log statements in the useLogin hook to track: 1) parameters received by the mutation function, 2) actor availability check, 3) backend method call with parameter types, 4) raw response from backend before processing, and 5) any errors caught during the login process. This will help identify if the issue is in how credentials are passed to the backend or how responses are handled."
+          "description": "Add React Query hook for checking admin role status by calling the backend's isCallerAdmin method. This will be used to guard admin-only routes and features."
+        },
+        {
+          "path": "frontend/src/components/AdminGuard.tsx",
+          "operation": "create",
+          "description": "Create a guard component that wraps admin routes and checks if the current user has admin role. Use the authorization component to verify admin permissions. Show loading state while checking role, redirect to login if not authenticated, and show access denied message if authenticated but not an admin. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wrap the admin dashboard route with the AdminGuard component to ensure only authenticated admin users can access it. This provides authorization protection at the routing level."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Create an admin dashboard page that displays after successful authentication, showing admin-specific functionality and controls",
+      "acceptanceCriteria": [
+        "Dashboard is only accessible after successful admin authentication",
+        "Dashboard provides clear admin interface with relevant controls",
+        "Dashboard maintains consistent styling with the main website theme",
+        "Unauthenticated access attempts are blocked"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/AdminDashboardPage.tsx",
+          "operation": "modify",
+          "description": "Implement admin dashboard page component that displays after successful admin authentication. Include sections for viewing all user inquiries from the contact form, user management capabilities, and admin controls. Use the authorization component for role-based features. Maintain consistent styling with the main website theme using existing Tailwind classes and color system. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add React Query hooks for admin operations including fetching all inquiries using getAllInquiries, deleting inquiries using deleteInquiry, and managing user profiles. These hooks will support the admin dashboard functionality."
+        },
+        {
+          "path": "frontend/src/components/InquiryList.tsx",
+          "operation": "create",
+          "description": "Create a component to display the list of all contact form inquiries in a table or card format. Include inquiry details like name, email, company, website type, features, budget, deadline, and notes. Add delete functionality for managing inquiries. Use consistent styling with the main theme."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register the /admin/dashboard route in the router configuration and ensure it is wrapped with AdminGuard for authorization protection."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Ensure the admin panel implementation is compatible with and deployable to the current production environment (Version 16)",
+      "acceptanceCriteria": [
+        "Admin panel deploys successfully to production",
+        "No conflicts with existing Version 16 functionality",
+        "All admin features work in production environment",
+        "Main website functionality remains unchanged for regular visitors"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Verify that the Layout component does not include any links or references to the admin panel routes, ensuring the admin section remains hidden from regular navigation. Confirm existing navigation items (Services, Portfolio, About, Contact) remain unchanged for public visitors."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Ensure the HomePage component and its composed sections (Hero, Services, Portfolio, About, Contact) remain unchanged and continue to function correctly for regular website visitors. No admin-related functionality should be visible or accessible from the public pages."
         }
       ]
     }

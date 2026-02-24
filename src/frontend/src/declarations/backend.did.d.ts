@@ -38,8 +38,8 @@ export interface _SERVICE {
   'getCallerUserRole' : ActorMethod<[], UserRole>,
   'getInquiry' : ActorMethod<[bigint], [] | [Inquiry]>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
+  'initializeActorAsAdmin' : ActorMethod<[string], undefined>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
-  'login' : ActorMethod<[string, string], string>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
   'submitInquiry' : ActorMethod<
     [string, string, string, string, string, string, string, string, string],

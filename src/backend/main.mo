@@ -1,19 +1,18 @@
 import Map "mo:core/Map";
 import Nat "mo:core/Nat";
 import Principal "mo:core/Principal";
-import Text "mo:core/Text";
 import Runtime "mo:core/Runtime";
+import Text "mo:core/Text";
 import MixinAuthorization "authorization/MixinAuthorization";
 import AccessControl "authorization/access-control";
-import Debug "mo:core/Debug";
 
 actor {
-  // User profile type
+  type AdminToken = Text;
+
   public type UserProfile = {
     name : Text;
   };
 
-  // Inquiry type
   public type Inquiry = {
     fullName : Text;
     emailAddress : Text;
@@ -26,32 +25,15 @@ actor {
     additionalNotes : Text;
   };
 
-  // Initialize the access control system
+  let adminToken : AdminToken = "admin-token"; // Only intended to be used on initialization of actor. Revoke after deployment.
+
   let accessControlState = AccessControl.initState();
   include MixinAuthorization(accessControlState);
 
-  // Store user profiles
   let userProfiles = Map.empty<Principal, UserProfile>();
-
-  // Store inquiries
   var nextInquiryId = 0;
   let inquiries = Map.empty<Nat, Inquiry>();
 
-  // LOGIN ENDPOINT - Validates login credentials only
-  // NOTE: This function only validates credentials. It does NOT assign roles.
-  // Role assignment must be done separately by an existing admin using assignUserRole.
-  public shared ({ caller }) func login(username : Text, password : Text) : async Text {
-    Debug.print("Attempting login with username: " # username # " and password: " # password);
-    if (username != "admin" or password != "admin123") {
-      Runtime.trap("Invalid credentials");
-    };
-
-    // Only validate credentials - do NOT assign roles here
-    // Role assignment should be done by existing admins through assignUserRole
-    "Authentication successful";
-  };
-
-  // Get caller's own profile (user permission required)
   public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can view profiles");
@@ -59,7 +41,6 @@ actor {
     userProfiles.get(caller);
   };
 
-  // Get any user's profile (admin can view any, users can only view their own)
   public query ({ caller }) func getUserProfile(user : Principal) : async ?UserProfile {
     if (not Principal.equal(caller, user) and not AccessControl.isAdmin(accessControlState, caller)) {
       Runtime.trap("Unauthorized: Can only view your own profile");
@@ -67,7 +48,6 @@ actor {
     userProfiles.get(user);
   };
 
-  // Save caller's profile (user permission required)
   public shared ({ caller }) func saveCallerUserProfile(profile : UserProfile) : async () {
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can save profiles");
@@ -75,7 +55,6 @@ actor {
     userProfiles.add(caller, profile);
   };
 
-  // Admin-only: Get all user profiles
   public query ({ caller }) func getAllUserProfiles() : async [(Principal, UserProfile)] {
     if (not (AccessControl.isAdmin(accessControlState, caller))) {
       Runtime.trap("Unauthorized: Only admins can view all profiles");
@@ -83,7 +62,6 @@ actor {
     userProfiles.toArray();
   };
 
-  // Admin-only: Delete a user profile
   public shared ({ caller }) func deleteUserProfile(user : Principal) : async () {
     if (not (AccessControl.isAdmin(accessControlState, caller))) {
       Runtime.trap("Unauthorized: Only admins can delete profiles");
@@ -91,19 +69,19 @@ actor {
     userProfiles.remove(user);
   };
 
-  // Admin-only: Assign role to a user
-  // This function properly delegates to AccessControl.assignRole which has built-in admin checks
   public shared ({ caller }) func assignUserRole(user : Principal, role : AccessControl.UserRole) : async () {
     AccessControl.assignRole(accessControlState, caller, user, role);
   };
 
-  // Get caller's role
+  // Intentionally public: Allows frontend to verify caller's role for UI rendering
+  // Returns the role of the caller (including guests). No sensitive data is exposed
+  // as each caller can only see their own role.
   public query ({ caller }) func getCallerRole() : async AccessControl.UserRole {
     AccessControl.getUserRole(accessControlState, caller);
   };
 
-  // Public inquiry submission endpoint - no authentication required
-  // This allows anyone (including guests/anonymous users) to submit inquiries
+  // Public endpoint: Allows unauthenticated users (guests) to submit contact inquiries
+  // This is intentional to enable potential clients to reach out without authentication
   public shared ({ caller }) func submitInquiry(
     fullName : Text,
     emailAddress : Text,
@@ -115,7 +93,6 @@ actor {
     deadline : Text,
     additionalNotes : Text,
   ) : async Nat {
-    // No authorization check - public endpoint for potential clients
     let inquiry : Inquiry = {
       fullName;
       emailAddress;
@@ -134,7 +111,6 @@ actor {
     currentId;
   };
 
-  // Admin-only: Get all inquiries
   public query ({ caller }) func getAllInquiries() : async [(Nat, Inquiry)] {
     if (not (AccessControl.isAdmin(accessControlState, caller))) {
       Runtime.trap("Unauthorized: Only admins can view inquiries");
@@ -142,7 +118,6 @@ actor {
     inquiries.toArray();
   };
 
-  // Admin-only: Get a specific inquiry
   public query ({ caller }) func getInquiry(id : Nat) : async ?Inquiry {
     if (not (AccessControl.isAdmin(accessControlState, caller))) {
       Runtime.trap("Unauthorized: Only admins can view inquiries");
@@ -150,11 +125,14 @@ actor {
     inquiries.get(id);
   };
 
-  // Admin-only: Delete an inquiry
   public shared ({ caller }) func deleteInquiry(id : Nat) : async () {
     if (not (AccessControl.isAdmin(accessControlState, caller))) {
       Runtime.trap("Unauthorized: Only admins can delete inquiries");
     };
     inquiries.remove(id);
+  };
+
+  public shared ({ caller }) func initializeActorAsAdmin(userProvidedToken : Text) : async () {
+    AccessControl.initialize(accessControlState, caller, adminToken, userProvidedToken);
   };
 };

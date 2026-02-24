@@ -38,8 +38,8 @@ export interface backendInterface {
     getCallerUserRole(): Promise<UserRole>;
     getInquiry(id: bigint): Promise<Inquiry | null>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
+    initializeActorAsAdmin(userProvidedToken: string): Promise<void>;
     isCallerAdmin(): Promise<boolean>;
-    login(username: string, password: string): Promise<string>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
     submitInquiry(fullName: string, emailAddress: string, phoneNumber: string, companyName: string, websiteType: string, features: string, budget: string, deadline: string, additionalNotes: string): Promise<bigint>;
 }
